@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Merchandise Store GA4 Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="hero" id="top">
+      <nav class="nav glass">
+        <a href="#top" class="brand">GA4 Merch Analysis</a>
+        <div class="nav-links" aria-label="Page navigation">
+          <a href="#cities">Cities</a>
+          <a href="#acquisition">Acquisition</a>
+          <a href="#technology">Technology</a>
+          <a href="#commerce">Commerce</a>
+          <a href="#retention">Retention</a>
+        </div>
+      </nav>
+      <section class="hero-grid reveal">
+        <div>
+          <p class="eyebrow">Google Analytics Assignment · Janelle Gardner · UMGC MRKT 411</p>
+          <h1>Audience, Platform, Technology & Retention Insights</h1>
+          <p class="hero-copy">
+            Animated dashboard layout for the Google Merchandise Store analysis covering user acquisition,
+            top cities, country reach, device engagement, product behavior, and January stickiness.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#cities">Explore city insights</a>
+            <a class="button ghost" href="#commerce">View product findings</a>
+          </div>
+        </div>
+        <aside class="snapshot glass" aria-label="Dashboard highlights">
+          <span>Highest city</span>
+          <strong>New York</strong>
+          <small>15,000 users · 30.61% of city users</small>
+          <div class="meter"><i style="width: 30.61%"></i></div>
+          <span>Highest country</span>
+          <strong>United States</strong>
+          <small>202,527 users · 57.7% share</small>
+          <div class="meter blue"><i style="width: 57.7%"></i></div>
+        </aside>
+      </section>
+    </header>
+
+    <main>
+      <section class="section reveal" id="cities">
+        <div class="section-heading">
+          <p class="eyebrow">Users by City · 09/01/23–01/31/24</p>
+          <h2>New York brings the most users</h2>
+          <p>
+            New York dominates with 15K users—almost a third of city-level traffic—while Toronto and
+            Mountain View drive the next biggest gains.
+          </p>
+        </div>
+        <div class="metric-row">
+          <article class="metric-card top-card">
+            <span>1st: Highest User City</span>
+            <strong>New York</strong>
+            <em>15,000 users · 30.61%</em>
+            <small>+14.3% from last period</small>
+          </article>
+          <article class="metric-card">
+            <span>2nd Highest User City</span>
+            <strong>Toronto</strong>
+            <em>11,000 users · 22.45%</em>
+          </article>
+          <article class="metric-card">
+            <span>3rd Highest User City</span>
+            <strong>Mountain View</strong>
+            <em>8,000 users · 18.37%</em>
+          </article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="chart-card wide">
+            <div class="chart-title">
+              <h3>City user concentration</h3>
+              <p>Heat map style comparison of the highest user cities.</p>
+            </div>
+            <div id="cityHeatmap" class="chart" role="img" aria-label="Heat map of users by city"></div>
+          </article>
+          <article class="chart-card">
+            <div class="chart-title">
+              <h3>Users by country</h3>
+              <p>United States is the highest-user country.</p>
+            </div>
+            <div class="country-stat">
+              <strong>351K</strong>
+              <span>current users</span>
+              <b>318K new · 80K returning</b>
+            </div>
+            <div id="countryGauge" class="chart compact" role="img" aria-label="United States country user share gauge"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section image-band reveal">
+        <img src="assets/e-commerce-shopping-header.jpg" alt="E-commerce shopping workspace" />
+        <div class="glass band-copy">
+          <p class="eyebrow">City Users Overview</p>
+          <h2>49,000 city users tracked in the overview</h2>
+          <p>
+            The strongest regional story is the United States, which produced 57.7% of country-level users
+            and 202,527 users during the analysis period.
+          </p>
+        </div>
+      </section>
+
+      <section class="section reveal" id="acquisition">
+        <div class="section-heading">
+          <p class="eyebrow">User Acquisition</p>
+          <h2>Direct and paid channels lead acquisition</h2>
+          <p>
+            Most users arrive via direct traffic or paid ads. Organic traffic mainly comes from Google, while
+            referrals and cross-network clicks also contribute meaningfully.
+          </p>
+        </div>
+        <div class="dashboard-grid">
+          <article class="chart-card wide">
+            <div class="chart-title">
+              <h3>Acquisition channel hierarchy</h3>
+              <p>Sunburst chart showing source and medium relationships.</p>
+            </div>
+            <div id="acquisitionSunburst" class="chart" role="img" aria-label="Sunburst chart of acquisition channels"></div>
+          </article>
+          <article class="insight-card">
+            <h3>Acquisition insight</h3>
+            <p>
+              Many visitors likely come through ads on other sites, including potential affiliate referrals.
+              The steep October drop shows that user acquisition improved, but retention after the campaign
+              remained a challenge.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="technology">
+        <div class="section-heading">
+          <p class="eyebrow">User Engagement and Technology · 09/01/23–01/31/24</p>
+          <h2>Mobile Android leads user volume, while desktop is most promising</h2>
+          <p>
+            Most new users engage through mobile devices, Android is the most popular operating system,
+            and desktop users show stronger engagement potential.
+          </p>
+        </div>
+        <div class="dashboard-grid">
+          <article class="chart-card">
+            <div class="chart-title">
+              <h3>Device engagement heat map</h3>
+              <p>New users, sessions, and engagement time by device.</p>
+            </div>
+            <div id="deviceHeatmap" class="chart" role="img" aria-label="Technology heat map"></div>
+          </article>
+          <article class="chart-card">
+            <div class="chart-title">
+              <h3>Engagement distribution</h3>
+              <p>Box-and-whisker chart comparing device categories.</p>
+            </div>
+            <div id="engagementBox" class="chart" role="img" aria-label="Box and whisker chart of engagement time by device"></div>
+          </article>
+        </div>
+        <div class="photo-cards">
+          <img src="assets/woman-shopping.jpg" alt="Woman shopping online" />
+          <img src="assets/man-shopping.jpg" alt="Man shopping online" />
+          <img src="woman-mobile-shop.jpg" alt="Woman shopping on a mobile phone" />
+        </div>
+      </section>
+
+      <section class="section reveal" id="commerce">
+        <div class="section-heading">
+          <p class="eyebrow">E-commerce Overview</p>
+          <h2>High views do not automatically create purchase intent</h2>
+          <p>
+            The Super G Timbuk2 Recycled Backpack was most added to cart, but the G25gle Birthday Mug was
+            the top purchase with 1,152 purchases.
+          </p>
+        </div>
+        <div class="dashboard-grid">
+          <article class="chart-card wide">
+            <div class="chart-title">
+              <h3>Product funnel comparison</h3>
+              <p>Views, add-to-cart behavior, purchases, and relative revenue efficiency.</p>
+            </div>
+            <div id="productFunnel" class="chart" role="img" aria-label="Product comparison chart"></div>
+          </article>
+          <article class="insight-card product">
+            <span>Most Added to Cart</span>
+            <h3>Super G Timbuk2 Recycled Backpack</h3>
+            <p>500000001003024 recorded as the item identifier in the analysis notes.</p>
+            <hr />
+            <span>Top Purchase</span>
+            <h3>G25gle Birthday Mug</h3>
+            <p>Purchased 1,152 times; apparel and mugs appear more scalable than accessories.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="retention">
+        <div class="section-heading">
+          <p class="eyebrow">January User Stickiness & Activity · 01/01/24–01/31/24</p>
+          <h2>Users were most active in the weekly-to-monthly category</h2>
+          <p>
+            User activity steadily declined over the last 30 days. WAU/MAU is the strongest stickiness metric,
+            while DAU/MAU remains poor.
+          </p>
+        </div>
+        <div class="metric-row stickiness">
+          <article class="metric-card poor"><span>DAU/MAU</span><strong>4.4%</strong><em>Poor</em></article>
+          <article class="metric-card average"><span>DAU/WAU</span><strong>14.3%</strong><em>Average</em></article>
+          <article class="metric-card good"><span>WAU/MAU</span><strong>30.7%</strong><em>Good</em></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="chart-card wide">
+            <div class="chart-title">
+              <h3>Active user decline</h3>
+              <p>1-day, 7-day, and 30-day active user trend during January.</p>
+            </div>
+            <div id="activityTrend" class="chart" role="img" aria-label="Active user trend line chart"></div>
+          </article>
+          <article class="insight-card">
+            <h3>Retention recommendation</h3>
+            <p>
+              Improve customer relationship management, satisfaction, mobile experience, and social proof to
+              support brand trust, attachment, and repeat visits.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section references reveal">
+        <h2>References</h2>
+        <ul>
+          <li>Hsu, C.-L., & Lin, J. C.-C. (2016). Effect of perceived value and social influences on mobile app stickiness and in-app purchase intention.</li>
+          <li>Yu, N., & Kong, J. (2016). User experience with web browsing on small screens.</li>
+          <li>Zhang, H., Hu, L., & Kim, Y. (2023). Dispel the Clouds and See the Sun: Influencing Factors and Multiple Paths of User Retention Intention Formation.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>Animated GA4 dashboard concept for Google Merchandise Store analysis.</p>
+      <a href="#top">Back to top ↑</a>
+    </footer>
+  </body>
+</html>
