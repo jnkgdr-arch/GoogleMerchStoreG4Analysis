@@ -159,7 +159,25 @@ function revealOnScroll() {
   document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+function bootDashboard() {
   revealOnScroll();
-  if (window.Plotly) renderCharts();
-});
+
+  let attempts = 0;
+
+  const waitForPlotly = setInterval(() => {
+    attempts++;
+
+    if (window.Plotly) {
+      clearInterval(waitForPlotly);
+      renderCharts();
+      return;
+    }
+
+    if (attempts > 30) {
+      clearInterval(waitForPlotly);
+      console.error("Plotly did not load. Charts could not render.");
+    }
+  }, 100);
+}
+
+window.addEventListener("DOMContentLoaded", bootDashboard);
