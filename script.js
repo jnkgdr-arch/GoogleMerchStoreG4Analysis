@@ -87,28 +87,30 @@ function renderCharts() {
     config
   );
 
-  Plotly.newPlot(
-    "deviceHeatmap",
-    [
-      {
-        z: [
-          [92, 80, 62, 12],
-          [88, 70, 75, 10],
-          [55, 74, 45, 6],
-        ],
-        x: ["Mobile Android", "Desktop", "Tablet", "Smart TV"],
+ Plotly.newPlot(
+  "deviceHeatmap",
+  [
+    {
+      z: [
+        [92, 80, 62, 12],
+        [88, 70, 75, 10],
+        [55, 74, 45, 6],
+      ],
+      x: ["Mobile Android", "Desktop", "Tablet", "Smart TV"],
       y: ["New users", "Engagement<br>sessions", "Avg. engagement"],
-        type: "heatmap",
-        colorscale: [[0, "#1e1b4b"], [0.5, colors.purple], [1, colors.yellow]],
-        hovertemplate: "%{y}<br>%{x}: %{z}<extra></extra>",
-      },
-    ],
-   {
-  ...baseLayout,
-  margin: { l: 150, r: 20, t: 15, b: 80 },
-  xaxis: { automargin: true, tickangle: -20 },
-  yaxis: { automargin: true, tickfont: { size: 12 } }
-},
+      type: "heatmap",
+      colorscale: [[0, "#1e1b4b"], [0.5, colors.purple], [1, colors.yellow]],
+      hovertemplate: "%{y}<br>%{x}: %{z}<extra></extra>",
+    },
+  ],
+  {
+    ...baseLayout,
+    margin: { l: 150, r: 20, t: 15, b: 80 },
+    xaxis: { automargin: true, tickangle: -20 },
+    yaxis: { automargin: true, tickfont: { size: 12 } },
+  },
+  config
+);
 
   Plotly.newPlot(
     "engagementBox",
