@@ -101,8 +101,15 @@ h3 { font-size: 1.25rem; margin-bottom: 0.35rem; }
 .chart-card, .insight-card { background: var(--card-strong); }
 .chart-title { display: flex; justify-content: space-between; gap: 1rem; align-items: start; margin-bottom: 0.5rem; }
 .chart-title p { color: var(--muted); margin: 0; }
-.chart { min-height: 390px; }
-.chart.compact { min-height: 240px; }
+.chart {
+  min-height: 390px;
+  width: 100%;
+}
+
+.chart.compact {
+  min-height: 240px;
+  width: 100%;
+}
 .country-stat { display: grid; gap: 0.2rem; padding: 1rem; border-radius: 1rem; background: rgba(255,255,255,0.06); }
 .country-stat strong { font-size: 3rem; letter-spacing: -0.07em; }
 .country-stat span, .country-stat b { color: var(--muted); }
