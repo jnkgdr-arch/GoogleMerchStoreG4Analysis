@@ -97,15 +97,18 @@ function renderCharts() {
           [55, 74, 45, 6],
         ],
         x: ["Mobile Android", "Desktop", "Tablet", "Smart TV"],
-        y: ["New users", "Engagement sessions", "Avg. engagement"],
+      y: ["New users", "Engagement<br>sessions", "Avg. engagement"],
         type: "heatmap",
         colorscale: [[0, "#1e1b4b"], [0.5, colors.purple], [1, colors.yellow]],
         hovertemplate: "%{y}<br>%{x}: %{z}<extra></extra>",
       },
     ],
-    { ...baseLayout, margin: { l: 125, r: 20, t: 15, b: 70 } },
-    config
-  );
+   {
+  ...baseLayout,
+  margin: { l: 150, r: 20, t: 15, b: 80 },
+  xaxis: { automargin: true, tickangle: -20 },
+  yaxis: { automargin: true, tickfont: { size: 12 } }
+},
 
   Plotly.newPlot(
     "engagementBox",
