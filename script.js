@@ -19,27 +19,125 @@ const baseLayout = {
 
 const config = { responsive: true, displayModeBar: false };
 
+const geographicUsers = [
+  { country: "Uganda", code: "UGA", users: 1, lat: 1.3733, lon: 32.2903 },
+  { country: "Mexico", code: "MEX", users: 1, lat: 23.6345, lon: -102.5528 },
+  { country: "India", code: "IND", users: 2, lat: 20.5937, lon: 78.9629 },
+  { country: "Canada", code: "CAN", users: 7, lat: 56.1304, lon: -106.3468 },
+  { country: "USA", code: "USA", users: 15, lat: 37.0902, lon: -95.7129 },
+];
+
+let countryPulseTimer;
+
+function renderCountryHeatmap() {
+  const countries = geographicUsers.map((entry) => entry.country);
+  const countryCodes = geographicUsers.map((entry) => entry.code);
+  const userCounts = geographicUsers.map((entry) => entry.users);
+
+  Plotly.newPlot(
+    "countryHeatmap",
+    [
+      {
+        type: "choropleth",
+        locationmode: "ISO-3",
+        locations: countryCodes,
+        z: userCounts,
+        text: countries,
+        colorscale: [
+          [0, "rgba(66, 133, 244, 0.22)"],
+          [0.5, colors.yellow],
+          [1, colors.green],
+        ],
+        marker: { line: { color: "rgba(255,255,255,0.65)", width: 0.8 } },
+        colorbar: {
+          title: { text: "Users", side: "right" },
+          tickcolor: colors.muted,
+          tickfont: { color: colors.muted },
+        },
+        hovertemplate: "%{text}<br>%{z} users<extra></extra>",
+      },
+      {
+        type: "scattergeo",
+        mode: "markers+text",
+        lat: geographicUsers.map((entry) => entry.lat),
+        lon: geographicUsers.map((entry) => entry.lon),
+        text: geographicUsers.map((entry) => `${entry.country}: ${entry.users}`),
+        textposition: ["top center", "bottom center", "top center", "top center", "bottom center"],
+        marker: {
+          size: userCounts.map((users) => 14 + users * 1.8),
+          color: colors.red,
+          opacity: 0.72,
+          line: { color: colors.text, width: 2 },
+        },
+        hovertemplate: "%{text} users<extra></extra>",
+        showlegend: false,
+      },
+    ],
+    {
+      ...baseLayout,
+      margin: { l: 0, r: 0, t: 0, b: 0 },
+      geo: {
+        bgcolor: "rgba(0,0,0,0)",
+        projection: { type: "natural earth" },
+        showframe: false,
+        showcoastlines: true,
+        coastlinecolor: "rgba(255,255,255,0.32)",
+        showcountries: true,
+        countrycolor: "rgba(255,255,255,0.22)",
+        showland: true,
+        landcolor: "rgba(255,255,255,0.06)",
+        showocean: true,
+        oceancolor: "rgba(66,133,244,0.08)",
+      },
+    },
+    config
+  );
+
+  if (countryPulseTimer) clearInterval(countryPulseTimer);
+
+  let expanded = false;
+  countryPulseTimer = setInterval(() => {
+    expanded = !expanded;
+    Plotly.restyle(
+      "countryHeatmap",
+      {
+        "marker.size": [userCounts.map((users) => (expanded ? 22 + users * 2.2 : 14 + users * 1.8))],
+        "marker.opacity": [expanded ? 0.38 : 0.82],
+      },
+      [1]
+    );
+  }, 900);
+}
+
+
 function renderCharts() {
+  renderCountryHeatmap();
   Plotly.newPlot(
     "cityHeatmap",
     [
       {
-        z: [[15000, 11000, 8000]],
-        x: ["New York", "Toronto", "Mountain View"],
-        y: ["Users"],
-        type: "heatmap",
-        colorscale: [
-          [0, "#12345d"],
-          [0.5, colors.blue],
-          [1, colors.green],
-        ],
-        text: [["15K · 30.61%", "11K · 22.45%", "8K · 18.37%"]],
-        texttemplate: "%{text}",
-        hovertemplate: "%{x}<br>%{z:,} users<extra></extra>",
-        showscale: false,
+        x: ["New York", "Toronto", "Mountain View", "San Jose", "Sunny Vale"],
+        y: [15000, 11000, 9000, 7000, 7000],
+        type: "scatter",
+        mode: "lines+markers+text",
+        name: "Users",
+        line: { color: colors.blue, width: 4, shape: "spline" },
+        marker: {
+          color: [colors.green, colors.blue, colors.yellow, colors.red, colors.purple],
+          size: [18, 16, 15, 14, 14],
+          line: { color: colors.text, width: 2 },
+        },
+        text: ["15.0K", "11.0K", "9.0K", "7.0K", "7.0K"],
+        textposition: "top center",
+        hovertemplate: "%{x}<br>%{y:,} users<extra></extra>",
       },
     ],
-    { ...baseLayout, xaxis: { tickfont: { size: 13 } }, yaxis: { showgrid: false } },
+    {
+      ...baseLayout,
+      margin: { l: 70, r: 30, t: 25, b: 90 },
+      xaxis: { tickfont: { size: 13 }, tickangle: -20, automargin: true },
+      yaxis: { title: "Users", gridcolor: colors.grid, rangemode: "tozero" },
+    },
     config
   );
 
@@ -71,67 +169,154 @@ function renderCharts() {
   );
 
   Plotly.newPlot(
-    "acquisitionSunburst",
+    "primaryChannelRowChart",
     [
       {
-        type: "sunburst",
-        labels: ["All users", "Direct", "Paid Ads", "Organic", "Referrals", "Cross-network", "Google", "Affiliate sites", "Partner networks"],
-        parents: ["", "All users", "All users", "All users", "All users", "All users", "Organic", "Referrals", "Cross-network"],
-        values: [100, 34, 27, 16, 12, 11, 16, 12, 11],
-        branchvalues: "total",
-        marker: { colors: ["#1b2a44", colors.blue, colors.red, colors.green, colors.yellow, colors.purple, "#7bdc9a", "#ffd966", "#b79cff"] },
-        hovertemplate: "%{label}<br>%{value}% share<extra></extra>",
+        x: [140000, 80000, 70000, 10000, 8000, 7000, 300],
+        y: ["Direct", "Organic Search", "Cross-Network", "Referral", "Email", "Organic Social", "Paid Search"],
+        type: "bar",
+        orientation: "h",
+        name: "Users",
+        marker: { color: colors.blue },
+        text: ["140K", "80K", "70K", "10K", "8K", "7K", "300"],
+        textposition: "auto",
+        hovertemplate: "%{y}<br>%{x:,} users<extra></extra>",
       },
     ],
-    { ...baseLayout, margin: { l: 0, r: 0, t: 10, b: 10 } },
-    config
-  );
-
- Plotly.newPlot(
-  "deviceHeatmap",
-  [
     {
-      z: [
-        [92, 80, 62, 12],
-        [88, 70, 75, 10],
-        [55, 74, 45, 6],
-      ],
-      x: ["Mobile Android", "Desktop", "Tablet", "Smart TV"],
-      y: ["New users", "Engagement<br>sessions", "Avg. engagement"],
-      type: "heatmap",
-      colorscale: [[0, "#1e1b4b"], [0.5, colors.purple], [1, colors.yellow]],
-      hovertemplate: "%{y}<br>%{x}: %{z}<extra></extra>",
+      ...baseLayout,
+      margin: { l: 150, r: 25, t: 15, b: 45 },
+      xaxis: { title: "Users", gridcolor: colors.grid },
+      yaxis: { autorange: "reversed", automargin: true },
     },
-  ],
-  {
-    ...baseLayout,
-    margin: { l: 150, r: 20, t: 15, b: 80 },
-    xaxis: { automargin: true, tickangle: -20 },
-    yaxis: { automargin: true, tickfont: { size: 12 } },
-  },
-  config
-);
-
-  Plotly.newPlot(
-    "engagementBox",
-    [
-      { y: [42, 48, 55, 61, 69, 74, 82], type: "box", name: "Mobile", marker: { color: colors.green } },
-      { y: [58, 68, 72, 80, 92, 105, 118], type: "box", name: "Desktop", marker: { color: colors.blue } },
-      { y: [24, 32, 38, 44, 51, 55, 60], type: "box", name: "Tablet", marker: { color: colors.yellow } },
-      { y: [8, 12, 16, 20, 22, 25, 31], type: "box", name: "Smart TV", marker: { color: colors.red } },
-    ],
-    { ...baseLayout, yaxis: { title: "Engagement seconds", gridcolor: colors.grid }, showlegend: false },
     config
   );
 
   Plotly.newPlot(
-    "productFunnel",
+    "operatingSystemRowChart",
     [
-      { x: ["Backpack", "Birthday Mug", "Tee", "Hoodie", "Bike"], y: [21000, 5894, 7600, 6100, 900], name: "Views", type: "bar", marker: { color: colors.blue } },
-      { x: ["Backpack", "Birthday Mug", "Tee", "Hoodie", "Bike"], y: [3200, 980, 1300, 1160, 90], name: "Add to cart", type: "bar", marker: { color: colors.purple } },
-      { x: ["Backpack", "Birthday Mug", "Tee", "Hoodie", "Bike"], y: [620, 1152, 1035, 895, 35], name: "Purchases", type: "bar", marker: { color: colors.green } },
+      {
+        x: [137000, 68000, 63000, 59000, 16000, 8000, 18],
+        y: ["Android", "Macintosh", "Windows", "iOS", "Chrome OS", "Linux", "Fuchsia"],
+        type: "bar",
+        orientation: "h",
+        name: "Users",
+        marker: { color: colors.green },
+        text: ["137K", "68K", "63K", "59K", "16K", "8K", "18"],
+        textposition: "auto",
+        hovertemplate: "%{y}<br>%{x:,} users<extra></extra>",
+      },
     ],
-    { ...baseLayout, barmode: "group", yaxis: { title: "Activity count", gridcolor: colors.grid }, legend: { orientation: "h" } },
+    {
+      ...baseLayout,
+      margin: { l: 120, r: 25, t: 15, b: 45 },
+      xaxis: { title: "Users", gridcolor: colors.grid },
+      yaxis: { autorange: "reversed", automargin: true },
+    },
+    config
+  );
+
+  Plotly.newPlot(
+    "deviceNewUsersRowChart",
+    [
+      {
+        x: [176075, 130604, 11202, 41],
+        y: ["Mobile", "Desktop", "Tablet", "SmartTV"],
+        type: "bar",
+        orientation: "h",
+        name: "New users",
+        marker: { color: colors.purple },
+        text: ["176,075", "130,604", "11,202", "41"],
+        textposition: "auto",
+        hovertemplate: "%{y}<br>%{x:,} new users<extra></extra>",
+      },
+    ],
+    {
+      ...baseLayout,
+      margin: { l: 90, r: 25, t: 15, b: 45 },
+      xaxis: { title: "New users", gridcolor: colors.grid },
+      yaxis: { autorange: "reversed", automargin: true },
+    },
+    config
+  );
+
+  Plotly.newPlot(
+    "deviceSessionsEngagementRowChart",
+    [
+      {
+        x: [1.0, 1.5, 1.0, 0.8],
+        y: ["Mobile", "Desktop", "Tablet", "SmartTV"],
+        type: "bar",
+        orientation: "h",
+        name: "Sessions",
+        marker: { color: colors.blue },
+        hovertemplate: "%{y}<br>Sessions: %{x}<extra></extra>",
+      },
+      {
+        x: [1, 3, 0, 1],
+        y: ["Mobile", "Desktop", "Tablet", "SmartTV"],
+        type: "bar",
+        orientation: "h",
+        name: "Avg. engagement",
+        marker: { color: colors.yellow },
+        hovertemplate: "%{y}<br>Avg. engagement: %{x}<extra></extra>",
+      },
+    ],
+    {
+      ...baseLayout,
+      barmode: "group",
+      margin: { l: 90, r: 25, t: 15, b: 45 },
+      xaxis: { title: "Metric value", gridcolor: colors.grid },
+      yaxis: { autorange: "reversed", automargin: true },
+      legend: { orientation: "h" },
+    },
+    config
+  );
+
+  Plotly.newPlot(
+    "itemRevenuePurchaseRowChart",
+    [
+      {
+        x: [33125, 24721.20, 24420, 17332.80, 15477, 13468],
+        y: [
+          "Super G Timbuk2 Recycled Backpack",
+          "G25gle Birthday Tee",
+          "Google 25th Birthday Hoodie",
+          "Google Black Eco Zip Hoodie",
+          "Google Campus Bike",
+          "G25gle Birthday Mug",
+        ],
+        type: "bar",
+        orientation: "h",
+        name: "Revenue ($)",
+        marker: { color: colors.green },
+        hovertemplate: "%{y}<br>Revenue: $%{x:,.2f}<extra></extra>",
+      },
+      {
+        x: [323, 1137, 402, 308, 339, 1152],
+        y: [
+          "Super G Timbuk2 Recycled Backpack",
+          "G25gle Birthday Tee",
+          "Google 25th Birthday Hoodie",
+          "Google Black Eco Zip Hoodie",
+          "Google Campus Bike",
+          "G25gle Birthday Mug",
+        ],
+        type: "bar",
+        orientation: "h",
+        name: "Purchases",
+        marker: { color: colors.red },
+        hovertemplate: "%{y}<br>Purchases: %{x:,}<extra></extra>",
+      },
+    ],
+    {
+      ...baseLayout,
+      barmode: "group",
+      margin: { l: 260, r: 25, t: 15, b: 45 },
+      xaxis: { title: "Revenue dollars / purchase count", gridcolor: colors.grid },
+      yaxis: { autorange: "reversed", automargin: true },
+      legend: { orientation: "h" },
+    },
     config
   );
 
