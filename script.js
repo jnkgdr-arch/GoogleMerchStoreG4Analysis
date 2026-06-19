@@ -19,27 +19,125 @@ const baseLayout = {
 
 const config = { responsive: true, displayModeBar: false };
 
+const geographicUsers = [
+  { country: "Uganda", code: "UGA", users: 1, lat: 1.3733, lon: 32.2903 },
+  { country: "Mexico", code: "MEX", users: 1, lat: 23.6345, lon: -102.5528 },
+  { country: "India", code: "IND", users: 2, lat: 20.5937, lon: 78.9629 },
+  { country: "Canada", code: "CAN", users: 7, lat: 56.1304, lon: -106.3468 },
+  { country: "USA", code: "USA", users: 15, lat: 37.0902, lon: -95.7129 },
+];
+
+let countryPulseTimer;
+
+function renderCountryHeatmap() {
+  const countries = geographicUsers.map((entry) => entry.country);
+  const countryCodes = geographicUsers.map((entry) => entry.code);
+  const userCounts = geographicUsers.map((entry) => entry.users);
+
+  Plotly.newPlot(
+    "countryHeatmap",
+    [
+      {
+        type: "choropleth",
+        locationmode: "ISO-3",
+        locations: countryCodes,
+        z: userCounts,
+        text: countries,
+        colorscale: [
+          [0, "rgba(66, 133, 244, 0.22)"],
+          [0.5, colors.yellow],
+          [1, colors.green],
+        ],
+        marker: { line: { color: "rgba(255,255,255,0.65)", width: 0.8 } },
+        colorbar: {
+          title: { text: "Users", side: "right" },
+          tickcolor: colors.muted,
+          tickfont: { color: colors.muted },
+        },
+        hovertemplate: "%{text}<br>%{z} users<extra></extra>",
+      },
+      {
+        type: "scattergeo",
+        mode: "markers+text",
+        lat: geographicUsers.map((entry) => entry.lat),
+        lon: geographicUsers.map((entry) => entry.lon),
+        text: geographicUsers.map((entry) => `${entry.country}: ${entry.users}`),
+        textposition: ["top center", "bottom center", "top center", "top center", "bottom center"],
+        marker: {
+          size: userCounts.map((users) => 14 + users * 1.8),
+          color: colors.red,
+          opacity: 0.72,
+          line: { color: colors.text, width: 2 },
+        },
+        hovertemplate: "%{text} users<extra></extra>",
+        showlegend: false,
+      },
+    ],
+    {
+      ...baseLayout,
+      margin: { l: 0, r: 0, t: 0, b: 0 },
+      geo: {
+        bgcolor: "rgba(0,0,0,0)",
+        projection: { type: "natural earth" },
+        showframe: false,
+        showcoastlines: true,
+        coastlinecolor: "rgba(255,255,255,0.32)",
+        showcountries: true,
+        countrycolor: "rgba(255,255,255,0.22)",
+        showland: true,
+        landcolor: "rgba(255,255,255,0.06)",
+        showocean: true,
+        oceancolor: "rgba(66,133,244,0.08)",
+      },
+    },
+    config
+  );
+
+  if (countryPulseTimer) clearInterval(countryPulseTimer);
+
+  let expanded = false;
+  countryPulseTimer = setInterval(() => {
+    expanded = !expanded;
+    Plotly.restyle(
+      "countryHeatmap",
+      {
+        "marker.size": [userCounts.map((users) => (expanded ? 22 + users * 2.2 : 14 + users * 1.8))],
+        "marker.opacity": [expanded ? 0.38 : 0.82],
+      },
+      [1]
+    );
+  }, 900);
+}
+
+
 function renderCharts() {
+  renderCountryHeatmap();
   Plotly.newPlot(
     "cityHeatmap",
     [
       {
-        z: [[15000, 11000, 8000]],
-        x: ["New York", "Toronto", "Mountain View"],
-        y: ["Users"],
-        type: "heatmap",
-        colorscale: [
-          [0, "#12345d"],
-          [0.5, colors.blue],
-          [1, colors.green],
-        ],
-        text: [["15K · 30.61%", "11K · 22.45%", "8K · 18.37%"]],
-        texttemplate: "%{text}",
-        hovertemplate: "%{x}<br>%{z:,} users<extra></extra>",
-        showscale: false,
+        x: ["New York", "Toronto", "Mountain View", "San Jose", "Sunny Vale"],
+        y: [15000, 11000, 9000, 7000, 7000],
+        type: "scatter",
+        mode: "lines+markers+text",
+        name: "Users",
+        line: { color: colors.blue, width: 4, shape: "spline" },
+        marker: {
+          color: [colors.green, colors.blue, colors.yellow, colors.red, colors.purple],
+          size: [18, 16, 15, 14, 14],
+          line: { color: colors.text, width: 2 },
+        },
+        text: ["15.0K", "11.0K", "9.0K", "7.0K", "7.0K"],
+        textposition: "top center",
+        hovertemplate: "%{x}<br>%{y:,} users<extra></extra>",
       },
     ],
-    { ...baseLayout, xaxis: { tickfont: { size: 13 } }, yaxis: { showgrid: false } },
+    {
+      ...baseLayout,
+      margin: { l: 70, r: 30, t: 25, b: 90 },
+      xaxis: { tickfont: { size: 13 }, tickangle: -20, automargin: true },
+      yaxis: { title: "Users", gridcolor: colors.grid, rangemode: "tozero" },
+    },
     config
   );
 
