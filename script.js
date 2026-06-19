@@ -109,9 +109,9 @@ function renderCountryHeatmap() {
   }, 900);
 }
 
-
 function renderCharts() {
   renderCountryHeatmap();
+
   Plotly.newPlot(
     "cityHeatmap",
     [
@@ -277,7 +277,7 @@ function renderCharts() {
     "itemRevenuePurchaseRowChart",
     [
       {
-        x: [33125, 24721.20, 24420, 17332.80, 15477, 13468],
+        x: [33125, 24721.2, 24420, 17332.8, 15477, 13468],
         y: [
           "Super G Timbuk2 Recycled Backpack",
           "G25gle Birthday Tee",
@@ -325,52 +325,11 @@ function renderCharts() {
     "Google Campus Bike",
     "G25gle Birthday Tee",
     "Google 25th Birthday Hoodie",
-    "Google Sensory Support Event Kiy",
+    "Google Sensory Support Event Kit",
     "Google Black Eco Zip Hoodie",
     "Chrome Dino Dark Mode Collectable",
   ];
-  const addedToCart = [3952, 65640, 202681, 9988, 500000001003024, 1437, 1908];
-  const purchased = [1152, 1137, 402, 339, 323, 308, 288];
-  const conversionRates = purchased.map((count, index) => (count / addedToCart[index]) * 100);
 
-  Plotly.newPlot(
-    "interestConversionChart",
-    [
-      {
-        y: conversionProducts,
-        x: conversionRates,
-        customdata: conversionProducts.map((_, index) => [addedToCart[index], purchased[index]]),
-        type: "bar",
-        orientation: "h",
-        marker: {
-          color: [colors.green, colors.red, colors.red, colors.yellow, colors.red, colors.green, colors.green],
-        },
-        text: conversionRates.map((rate) => (rate < 0.01 ? "<0.01%" : `${rate.toFixed(1)}%`)),
-        textposition: "outside",
-        hovertemplate:
-          "%{y}<br>Added to cart: %{customdata[0]:,}<br>Purchased: %{customdata[1]:,}<br>Conversion: %{text}<extra></extra>",
-      },
-    ],
-    {
-      ...baseLayout,
-      barmode: "group",
-      margin: { l: 60, r: 25, t: 20, b: 95 },
-      xaxis: { automargin: true, tickangle: -25, tickfont: { size: 11 } },
-      yaxis: { title: "Activity count", gridcolor: colors.grid, automargin: true },
-      legend: { orientation: "h", y: -0.32 },
-    },
-    config
-  );
-
-  const conversionProducts = [
-    "Super G Timbuk2 Recycled Backpack",
-    "Google Campus Bike",
-    "G25gle Birthday Tee",
-    "Google 25th Birthday Hoodie",
-    "Google Sensory Support Event Kiy",
-    "Google Black Eco Zip Hoodie",
-    "Chrome Dino Dark Mode Collectable",
-  ];
   const addedToCart = [3952, 65640, 202681, 9988, 500000001003024, 1437, 1908];
   const purchased = [1152, 1137, 402, 339, 323, 308, 288];
   const conversionRates = purchased.map((count, index) => (count / addedToCart[index]) * 100);
@@ -407,11 +366,33 @@ function renderCharts() {
   Plotly.newPlot(
     "activityTrend",
     [
-      { x: ["Jan 1", "Jan 8", "Jan 15", "Jan 22", "Jan 31"], y: [4200, 3800, 3200, 2600, 2100], mode: "lines+markers", name: "30 days", line: { color: colors.blue, width: 4 } },
-      { x: ["Jan 1", "Jan 8", "Jan 15", "Jan 22", "Jan 31"], y: [1500, 1360, 1100, 860, 640], mode: "lines+markers", name: "7 days", line: { color: colors.yellow, width: 4 } },
-      { x: ["Jan 1", "Jan 8", "Jan 15", "Jan 22", "Jan 31"], y: [520, 430, 350, 255, 180], mode: "lines+markers", name: "1 day", line: { color: colors.red, width: 4 } },
+      {
+        x: ["Jan 1", "Jan 8", "Jan 15", "Jan 22", "Jan 31"],
+        y: [4200, 3800, 3200, 2600, 2100],
+        mode: "lines+markers",
+        name: "30 days",
+        line: { color: colors.blue, width: 4 },
+      },
+      {
+        x: ["Jan 1", "Jan 8", "Jan 15", "Jan 22", "Jan 31"],
+        y: [1500, 1360, 1100, 860, 640],
+        mode: "lines+markers",
+        name: "7 days",
+        line: { color: colors.yellow, width: 4 },
+      },
+      {
+        x: ["Jan 1", "Jan 8", "Jan 15", "Jan 22", "Jan 31"],
+        y: [520, 430, 350, 255, 180],
+        mode: "lines+markers",
+        name: "1 day",
+        line: { color: colors.red, width: 4 },
+      },
     ],
-    { ...baseLayout, yaxis: { title: "Active users", gridcolor: colors.grid }, legend: { orientation: "h" } },
+    {
+      ...baseLayout,
+      yaxis: { title: "Active users", gridcolor: colors.grid },
+      legend: { orientation: "h" },
+    },
     config
   );
 }
@@ -425,6 +406,7 @@ function revealOnScroll() {
     },
     { threshold: 0.12 }
   );
+
   document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
 }
 
