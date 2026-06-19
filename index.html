@@ -53,10 +53,10 @@
       <section class="section reveal" id="cities">
         <div class="section-heading">
           <p class="eyebrow">Users by City · 09/01/23–01/31/24</p>
-          <h2>New York brings the most users</h2>
+          <h2>New York leads city-level users</h2>
           <p>
-            New York dominates with 15K users—almost a third of city-level traffic—while Toronto and
-            Mountain View drive the next biggest gains.
+            New York leads with 15.0K users, followed by Toronto at 11.0K, Mountain View at 9.0K,
+            and San Jose and Sunny Vale tied at 7.0K users.
           </p>
         </div>
         <div class="metric-row">
@@ -74,16 +74,16 @@
           <article class="metric-card">
             <span>3rd Highest User City</span>
             <strong>Mountain View</strong>
-            <em>8,000 users · 18.37%</em>
+            <em>9,000 users · 18.37%</em>
           </article>
         </div>
         <div class="dashboard-grid">
           <article class="chart-card wide">
             <div class="chart-title">
-              <h3>City user concentration</h3>
-              <p>Heat map style comparison of the highest user cities.</p>
+              <h3>Users by City</h3>
+              <p>Line graph comparison of the highest user cities.</p>
             </div>
-            <div id="cityHeatmap" class="chart" role="img" aria-label="Heat map of users by city"></div>
+            <div id="cityHeatmap" class="chart" role="img" aria-label="Line graph of users by city"></div>
           </article>
           <article class="chart-card">
             <div class="chart-title">
@@ -98,6 +98,13 @@
             <div id="countryGauge" class="chart compact" role="img" aria-label="United States country user share gauge"></div>
           </article>
         </div>
+        <article class="chart-card geographic-map-card">
+          <div class="chart-title">
+            <h3>Geographic user heat map</h3>
+            <p>Country-level users with pulsing markers for Uganda, Mexico, India, Canada, and the USA.</p>
+          </div>
+          <div id="countryHeatmap" class="chart geo-chart" role="img" aria-label="Geographic heat map of users by country with pulsing country markers"></div>
+        </article>
       </section>
 
       <section class="section image-band reveal">
@@ -124,10 +131,10 @@
         <div class="dashboard-grid">
           <article class="chart-card wide">
             <div class="chart-title">
-              <h3>Acquisition channel hierarchy</h3>
-              <p>Sunburst chart showing source and medium relationships.</p>
+              <h3>Primary channel acquisition</h3>
+              <p>Horizontal row chart comparing users by primary channel.</p>
             </div>
-            <div id="acquisitionSunburst" class="chart" role="img" aria-label="Sunburst chart of acquisition channels"></div>
+            <div id="primaryChannelRowChart" class="chart" role="img" aria-label="Horizontal bar chart of users by primary channel"></div>
           </article>
           <article class="insight-card">
             <h3>Acquisition insight</h3>
@@ -150,19 +157,26 @@
           </p>
         </div>
         <div class="dashboard-grid">
-          <article class="chart-card">
+          <article class="chart-card wide">
             <div class="chart-title">
-              <h3>Device engagement heat map</h3>
-              <p>New users, sessions, and engagement time by device.</p>
+              <h3>Operating system users</h3>
+              <p>Horizontal row chart of users by operating system.</p>
             </div>
-            <div id="deviceHeatmap" class="chart" role="img" aria-label="Technology heat map"></div>
+            <div id="operatingSystemRowChart" class="chart" role="img" aria-label="Horizontal bar chart of users by operating system"></div>
           </article>
           <article class="chart-card">
             <div class="chart-title">
-              <h3>Engagement distribution</h3>
-              <p>Box-and-whisker chart comparing device categories.</p>
+              <h3>New users by device</h3>
+              <p>Horizontal row chart of new users by device category.</p>
             </div>
-            <div id="engagementBox" class="chart" role="img" aria-label="Box and whisker chart of engagement time by device"></div>
+            <div id="deviceNewUsersRowChart" class="chart" role="img" aria-label="Horizontal bar chart of new users by device category"></div>
+          </article>
+          <article class="chart-card wide">
+            <div class="chart-title">
+              <h3>Sessions and average engagement by device</h3>
+              <p>Grouped horizontal row chart with sessions and average engagement.</p>
+            </div>
+            <div id="deviceSessionsEngagementRowChart" class="chart" role="img" aria-label="Grouped horizontal bar chart of sessions and average engagement by device"></div>
           </article>
         </div>
         <div class="photo-cards">
@@ -184,10 +198,10 @@
         <div class="dashboard-grid">
           <article class="chart-card wide">
             <div class="chart-title">
-              <h3>Product funnel comparison</h3>
-              <p>Views, add-to-cart behavior, purchases, and relative revenue efficiency.</p>
+              <h3>Item revenue and purchases</h3>
+              <p>Grouped horizontal row chart comparing revenue dollars and purchases.</p>
             </div>
-            <div id="productFunnel" class="chart" role="img" aria-label="Product comparison chart"></div>
+            <div id="itemRevenuePurchaseRowChart" class="chart" role="img" aria-label="Grouped horizontal bar chart of item revenue and purchases"></div>
           </article>
           <article class="insight-card product">
             <span>Most Added to Cart</span>
