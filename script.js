@@ -274,51 +274,69 @@ function renderCharts() {
   );
 
   Plotly.newPlot(
-    "itemRevenuePurchaseRowChart",
-    [
-      {
-        x: [33125, 24721.2, 24420, 17332.8, 15477, 13468],
-        y: [
-          "Super G Timbuk2 Recycled Backpack",
-          "G25gle Birthday Tee",
-          "Google 25th Birthday Hoodie",
-          "Google Black Eco Zip Hoodie",
-          "Google Campus Bike",
-          "G25gle Birthday Mug",
-        ],
-        type: "bar",
-        orientation: "h",
-        name: "Revenue ($)",
-        marker: { color: colors.green },
-        hovertemplate: "%{y}<br>Revenue: $%{x:,.2f}<extra></extra>",
-      },
-      {
-        x: [323, 1137, 402, 308, 339, 1152],
-        y: [
-          "Super G Timbuk2 Recycled Backpack",
-          "G25gle Birthday Tee",
-          "Google 25th Birthday Hoodie",
-          "Google Black Eco Zip Hoodie",
-          "Google Campus Bike",
-          "G25gle Birthday Mug",
-        ],
-        type: "bar",
-        orientation: "h",
-        name: "Purchases",
-        marker: { color: colors.red },
-        hovertemplate: "%{y}<br>Purchases: %{x:,}<extra></extra>",
-      },
-    ],
+  "itemRevenuePurchaseRowChart",
+  [
     {
-      ...baseLayout,
-      barmode: "group",
-      margin: { l: 260, r: 25, t: 15, b: 45 },
-      xaxis: { title: "Revenue dollars / purchase count", gridcolor: colors.grid },
-      yaxis: { autorange: "reversed", automargin: true },
-      legend: { orientation: "h" },
+      x: [33125, 24721.2, 24420, 17332.8, 15477, 13468],
+      y: [
+        "Super G Timbuk2 Recycled Backpack",
+        "G25gle Birthday Tee",
+        "Google 25th Birthday Hoodie",
+        "Google Black Eco Zip Hoodie",
+        "Google Campus Bike",
+        "G25gle Birthday Mug",
+      ],
+      type: "bar",
+      orientation: "h",
+      name: "Revenue ($)",
+      marker: { color: colors.green },
+      hovertemplate: "%{y}<br>Revenue: $%{x:,.2f}<extra></extra>",
     },
-    config
-  );
+    {
+      x: [323, 1137, 402, 308, 339, 1152],
+      y: [
+        "Super G Timbuk2 Recycled Backpack",
+        "G25gle Birthday Tee",
+        "Google 25th Birthday Hoodie",
+        "Google Black Eco Zip Hoodie",
+        "Google Campus Bike",
+        "G25gle Birthday Mug",
+      ],
+      type: "bar",
+      orientation: "h",
+      name: "Purchases",
+      marker: { color: colors.red },
+      hovertemplate: "%{y}<br>Purchases: %{x:,}<extra></extra>",
+    },
+  ],
+  {
+    ...baseLayout,
+    height: 520,
+    barmode: "group",
+    bargap: 0.35,
+    bargroupgap: 0.18,
+    margin: { l: 285, r: 35, t: 55, b: 60 },
+    xaxis: {
+      title: "Revenue dollars / purchase count",
+      gridcolor: colors.grid,
+      automargin: true,
+    },
+    yaxis: {
+      autorange: "reversed",
+      automargin: true,
+      tickfont: { size: 11 },
+    },
+    legend: {
+      orientation: "h",
+      x: 0,
+      y: 1.16,
+      xanchor: "left",
+      yanchor: "bottom",
+      itemwidth: 120,
+    },
+  },
+  config
+);
 
   const conversionProducts = [
     "Super G Timbuk2 Recycled Backpack",
