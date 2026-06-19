@@ -111,6 +111,12 @@ h3 { font-size: 1.25rem; margin-bottom: 0.35rem; }
   min-height: 240px;
   width: 100%;
 }
+.geographic-map-card {
+  margin-top: 1rem;
+}
+.geo-chart {
+  min-height: 520px;
+}
 .country-stat { display: grid; gap: 0.2rem; padding: 1rem; border-radius: 1rem; background: rgba(255,255,255,0.06); }
 .country-stat strong { font-size: 3rem; letter-spacing: -0.07em; }
 .country-stat span, .country-stat b { color: var(--muted); }
