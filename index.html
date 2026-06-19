@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js" defer></script>
-<script src="script.js?v=3" defer></script>
+<script src="script.js?v=4" defer></script>
   </head>
   <body>
     <header class="hero" id="top">
@@ -131,10 +131,10 @@
         <div class="dashboard-grid">
           <article class="chart-card wide">
             <div class="chart-title">
-              <h3>Acquisition channel hierarchy</h3>
-              <p>Sunburst chart showing source and medium relationships.</p>
+              <h3>Primary channel acquisition</h3>
+              <p>Horizontal row chart comparing users by primary channel.</p>
             </div>
-            <div id="acquisitionSunburst" class="chart" role="img" aria-label="Sunburst chart of acquisition channels"></div>
+            <div id="primaryChannelRowChart" class="chart" role="img" aria-label="Horizontal bar chart of users by primary channel"></div>
           </article>
           <article class="insight-card">
             <h3>Acquisition insight</h3>
@@ -157,19 +157,26 @@
           </p>
         </div>
         <div class="dashboard-grid">
-          <article class="chart-card">
+          <article class="chart-card wide">
             <div class="chart-title">
-              <h3>Device engagement heat map</h3>
-              <p>New users, sessions, and engagement time by device.</p>
+              <h3>Operating system users</h3>
+              <p>Horizontal row chart of users by operating system.</p>
             </div>
-            <div id="deviceHeatmap" class="chart" role="img" aria-label="Technology heat map"></div>
+            <div id="operatingSystemRowChart" class="chart" role="img" aria-label="Horizontal bar chart of users by operating system"></div>
           </article>
           <article class="chart-card">
             <div class="chart-title">
-              <h3>Engagement distribution</h3>
-              <p>Box-and-whisker chart comparing device categories.</p>
+              <h3>New users by device</h3>
+              <p>Horizontal row chart of new users by device category.</p>
             </div>
-            <div id="engagementBox" class="chart" role="img" aria-label="Box and whisker chart of engagement time by device"></div>
+            <div id="deviceNewUsersRowChart" class="chart" role="img" aria-label="Horizontal bar chart of new users by device category"></div>
+          </article>
+          <article class="chart-card wide">
+            <div class="chart-title">
+              <h3>Sessions and average engagement by device</h3>
+              <p>Grouped horizontal row chart with sessions and average engagement.</p>
+            </div>
+            <div id="deviceSessionsEngagementRowChart" class="chart" role="img" aria-label="Grouped horizontal bar chart of sessions and average engagement by device"></div>
           </article>
         </div>
         <div class="photo-cards">
@@ -191,10 +198,10 @@
         <div class="dashboard-grid">
           <article class="chart-card wide">
             <div class="chart-title">
-              <h3>Product funnel comparison</h3>
-              <p>Views, add-to-cart behavior, purchases, and relative revenue efficiency.</p>
+              <h3>Item revenue and purchases</h3>
+              <p>Grouped horizontal row chart comparing revenue dollars and purchases.</p>
             </div>
-            <div id="productFunnel" class="chart" role="img" aria-label="Product comparison chart"></div>
+            <div id="itemRevenuePurchaseRowChart" class="chart" role="img" aria-label="Grouped horizontal bar chart of item revenue and purchases"></div>
           </article>
           <article class="insight-card product">
             <span>Most Added to Cart</span>
