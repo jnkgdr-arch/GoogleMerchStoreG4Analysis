@@ -98,6 +98,7 @@ h3 { font-size: 1.25rem; margin-bottom: 0.35rem; }
 .metric-card small { color: #9ee7b7; font-weight: 800; }
 .top-card { background: linear-gradient(145deg, rgba(66, 133, 244, 0.28), rgba(15, 32, 56, 0.92)); }
 .dashboard-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr); gap: 1rem; align-items: stretch; }
+.conversion-grid { margin-top: 1rem; }
 .chart-card, .insight-card { background: var(--card-strong); }
 .chart-title { display: flex; justify-content: space-between; gap: 1rem; align-items: start; margin-bottom: 0.5rem; }
 .chart-title p { color: var(--muted); margin: 0; }

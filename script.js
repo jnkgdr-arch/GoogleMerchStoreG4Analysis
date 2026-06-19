@@ -320,6 +320,47 @@ function renderCharts() {
     config
   );
 
+  const conversionProducts = [
+    "Super G Timbuk2 Recycled Backpack",
+    "Google Campus Bike",
+    "G25gle Birthday Tee",
+    "Google 25th Birthday Hoodie",
+    "Google Sensory Support Event Kiy",
+    "Google Black Eco Zip Hoodie",
+    "Chrome Dino Dark Mode Collectable",
+  ];
+  const addedToCart = [3952, 65640, 202681, 9988, 500000001003024, 1437, 1908];
+  const purchased = [1152, 1137, 402, 339, 323, 308, 288];
+  const conversionRates = purchased.map((count, index) => (count / addedToCart[index]) * 100);
+
+  Plotly.newPlot(
+    "interestConversionChart",
+    [
+      {
+        y: conversionProducts,
+        x: conversionRates,
+        customdata: conversionProducts.map((_, index) => [addedToCart[index], purchased[index]]),
+        type: "bar",
+        orientation: "h",
+        marker: {
+          color: [colors.green, colors.red, colors.red, colors.yellow, colors.red, colors.green, colors.green],
+        },
+        text: conversionRates.map((rate) => (rate < 0.01 ? "<0.01%" : `${rate.toFixed(1)}%`)),
+        textposition: "outside",
+        hovertemplate:
+          "%{y}<br>Added to cart: %{customdata[0]:,}<br>Purchased: %{customdata[1]:,}<br>Conversion: %{text}<extra></extra>",
+      },
+    ],
+    {
+      ...baseLayout,
+      margin: { l: 230, r: 55, t: 15, b: 55 },
+      xaxis: { title: "Purchase conversion rate", ticksuffix: "%", gridcolor: colors.grid, rangemode: "tozero" },
+      yaxis: { automargin: true, autorange: "reversed", tickfont: { size: 12 } },
+      showlegend: false,
+    },
+    config
+  );
+
   Plotly.newPlot(
     "activityTrend",
     [
